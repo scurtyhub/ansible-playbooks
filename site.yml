@@ -1,0 +1,10 @@
+#This Contains the group of hosts that will be managed using the available roles.
+#You can either import other yml files but those yml files should have roles mentioned in them.
+- name: All roles site file
+  hosts: all
+  become: true
+  become_method: sudo
+
+  roles:
+    - initial-setup
+    - upgrades

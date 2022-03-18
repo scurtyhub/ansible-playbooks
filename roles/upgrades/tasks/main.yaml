@@ -1,0 +1,22 @@
+# This playbook updates and upgrades servers
+- name: update repo index and upgrade dist
+  tags: update
+  apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: Check if reboot required
+  tags: update
+  stat:
+    path: "/var/run/reboot-required"      #check if this file exists which should indicate a reboot is needed
+  register: reboot_required_file          #register the reboot
+
+- name: reboot if required
+  reboot:
+    msg: "Reboot initiated by Ansible"    #Message to display to users before reboot.
+    connect_timeout: 5                    #Maximum seconds to wait for a successful connection to the managed hosts before trying again.
+    reboot_timeout: 120                   #Maximum seconds to wait for machine to reboot and respond to a test command.
+    pre_reboot_delay: 0                   #Seconds to wait before reboot. Passed as a parameter to the reboot command.
+    post_reboot_delay: 30                 #Seconds to wait after the reboot command was successful before attempting to validate the system rebooted successfully.
+    test_command: whoami                  #Command to run on the rebooted host and expect success from to determine the machine is ready for further tasks.
+  when: reboot_required_file.stat.exists

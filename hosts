@@ -1,0 +1,11 @@
+#The file has all the list of k8s workers and nodes ip addresses/DNS names.
+#k8s-master
+[master]
+192.168.40.159
+
+#k8s worker nodes
+[workers]
+192.168.60.169
+192.168.20.169
+192.168.40.149
+192.168.30.169

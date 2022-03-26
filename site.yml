@@ -8,3 +8,11 @@
   roles:
     - initial-setup
     - upgrades
+
+- name: Archery role
+  hosts: archery
+  become: true
+  become_method: sudo
+
+  roles:
+    - archerysec-upload

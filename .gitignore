@@ -1,2 +1,5 @@
 #idea folder
 .idea/
+
+#exclude actual main.yaml files for archerysec
+roles/archerysec-upload/tasks/main.yaml

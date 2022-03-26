@@ -1,0 +1,28 @@
+#Modify this task to correct commands (add hostname, token etc) and rename it to main.yaml
+# This playbook sets up steps needed for archery sec uploads
+#install pip3
+- name: install pip3
+  tags: archerysec
+  apt:
+    name: python3-pip
+    state: present
+
+#install archerysec-cli command
+- name: install archerysec-cli
+  tags: archerysec
+  pip:
+    name: archerysec-cli
+
+#install new cronjob
+- name: update cronjob to upload xml files on a daily basis
+  tags: archerysec
+  cron:
+    name: "upload"
+    user: "ansible"
+    weekday: "*"
+    minute: "0"
+    hour: "7"
+    job: "/usr/local/bin/archerysec-cli -h <hostname> -t <api-token> \
+          -p <report-path> --file-type=XML --target=ASFLKSF \
+           --scanner=zap_scan --project=<project-uid> --upload"
+    state: present
